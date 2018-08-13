@@ -1,1 +1,67 @@
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UTFDataFormatException;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
+
+
+public class UpdateProperties {
+
+	public static void main (String [] args){
+		
+	}
+	
+	/***********/
+	File readFile(String path){
+		File file = new File("");
+		return file ;
+	}
+	
+	
+	/***********/
+	public boolean isPropertyPresent(File file) throws IOException{
+		boolean isPropertyPresent = false ;
+		List<String> yamlLines = FileUtils.readLines(file, "UTF8");
+		for (int i = 0; i < yamlLines.size(); i++) {
+			
+			String tempLine = yamlLines.get(i);
+			isPropertyPresent = StringUtils.containsIgnoreCase(tempLine, "    qaintpath3");
+			//check if the value is empty
+			if (isPropertyPresent) {
+				isPropertyPresent= StringUtils.containsIgnoreCase(yamlLines.get(i+2), "backendURL: \"\"") ;
+				
+				//check if certificate properties is also required
+				isPropertyPresent= StringUtils.containsIgnoreCase(yamlLines.get(i+3), "backendURL: \"\"") ;
+				
+				
+			}
+					
+		}
+		return false ;
+	}
+	
+	
+	/***********/
+	public String getStringToReplace(File f){
+		return "" ;
+	}
+	
+	
+	/***********/
+	public void addProperties(File inputFile, File outputFile, String toReplace, String replacementString){
+	try {
+	     String content = FileUtils.readFileToString(inputFile, "UTF-8");
+	     content = content.replaceAll("toReplace", "replacementString");	     
+	     FileUtils.writeStringToFile(outputFile, content, "UTF-8");
+	  } catch (IOException e) {
+	     //Simple exception handling, replace with what's necessary for your use case!
+	     throw new RuntimeException("Generating file failed", e);
+	  }finally{
+		  
+	  }
+	}
+}
